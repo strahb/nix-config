@@ -8,8 +8,10 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      # Configuration for Virtual Machines, just to keep things tidy
+      ./vm-config.nix
     ];
-
+	
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -41,16 +43,6 @@
     LC_TIME = "en_GB.UTF-8";
   };
 
-  # Enable the OpenSSH daemon
-  services.openssh = {
-	enable = true;
-	banner = "NixOS-VM";
-	passwordAuthentication = true;
-  };
-
-  # Enable VMWare Guest Services
-  virtualisation.vmware.guest.enable = true;
-
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
@@ -58,10 +50,6 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
-  # Hyprland Configuration
-  programs.hyprland.enable = true;
-  xdg.portal.enable = true;
-  services.xserver.displayManager.sessionPackages = [ pkgs.sway ];
 	
   # Configure keymap in X11
   services.xserver = {
@@ -95,7 +83,7 @@
   # Enable Automatic Garbage Collection	
   nix.gc.automatic = true;
 
-  
+  #
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -121,16 +109,6 @@
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     pkgs.neofetch
     wget
-    pkgs.waybar
-	(pkgs.waybar.overrideAttrs (oldAttrs: {
-  		mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-  		}))
-    pkgs.kitty
-    pkgs.mako
-    pkgs.libnotify
-    pkgs.swww
-    rofi-wayland
-    pkgs.xdg-desktop-portal-gtk
     ];
 
   # Some programs need SUID wrappers, can be configured further or are
