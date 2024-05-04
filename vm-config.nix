@@ -3,8 +3,8 @@
   services.openssh = {
 	enable = true;
 	banner = "NixOS-VM";
-	passwordAuthentication = true;
-  	permitRootLogin = "yes";
+	settings.PasswordAuthentication = true;
+  settings.PermitRootLogin = "yes";
   };
 
 # Enable VMWare Guest Services

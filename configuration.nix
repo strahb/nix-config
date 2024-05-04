@@ -10,6 +10,7 @@
       ./hardware-configuration.nix
       # Configuration for Virtual Machines, just to keep things tidy
       ./vm-config.nix
+      ./hyprland.nix
     ];
 	
   # Bootloader.
@@ -18,6 +19,9 @@
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
+  # Enable Flakes and the new nix command tool
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -107,8 +111,8 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    fastfetch
     wget
+    fastfetch # Just a better successor tbh
     ];
 
   # Some programs need SUID wrappers, can be configured further or are
