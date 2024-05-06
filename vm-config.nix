@@ -1,12 +1,12 @@
-{
-# Enable the OpenSSH daemon
+{config, pkgs, ...}: {
+
+  # Enable the OpenSSH daemon
   services.openssh = {
-	enable = true;
-	banner = "NixOS-VM";
-	settings.PasswordAuthentication = true;
-  settings.PermitRootLogin = "yes";
+    enable = true;
+    settings.PasswordAuthentication = true;
+    settings.PermitRootLogin = "yes";
   };
 
-# Enable VMWare Guest Services
+  # Enable VMWare Guest Services
   virtualisation.vmware.guest.enable = true;
 }

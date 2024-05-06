@@ -8,32 +8,22 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      # Configuration modules
+      ./devices.nix     ## Device configuration (Spooler, Display, Mouse, I/O, etc)
+      ./networking.nix  ## Network and Firewall configuration
+      ./packages.nix    ## Package declaration file, will probably get its own modules later
+      ./users.nix       ## User declaration alongside user packages
       # Configuration for Virtual Machines, just to keep things tidy
       ./vm-config.nix
-      ./hyprland.nix
     ];
 	
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable Flakes and the new nix command tool
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
-  nix.settings = {
-    substituters = ["https://hyprland.cachix.org"];
-    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
-  };
-  
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
-
   # Set your time zone.
   time.timeZone = "Africa/Casablanca";
 
@@ -69,56 +59,19 @@
   # Configure console keymap
   console.keyMap = "fr";
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
-
   # Enable Automatic Garbage Collection	
   nix.gc.automatic = true;
 
-  #
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.nix = {
-    isNormalUser = true;
-    description = "nix";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-    #  thunderbird
-    ];
-  };
-
-  # Install firefox.
-  programs.firefox.enable = true;
+  # Add garbage collection alias
+  environment.interactiveShellInit = ''
+  alias recycle='nix-collect-garbage'
+  alias rebuild='nixos-rebuild switch --flake /etc/nixos/flake.nix'
+  '';
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    fastfetch # Just a better successor tbh
-    ];
+
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -128,13 +81,6 @@
   #   enableSSHSupport = true;
   # };
 
-  # List services that you want to enable.
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
