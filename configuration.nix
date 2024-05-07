@@ -13,6 +13,7 @@
       ./networking.nix  ## Network and Firewall configuration
       ./packages.nix    ## Package declaration file, will probably get its own modules later
       ./users.nix       ## User declaration alongside user packages
+      ./bash.nix        ## Bash configuration (Aliases/Path Variables)
       # Configuration for Virtual Machines, just to keep things tidy
       ./vm-config.nix
     ];
@@ -61,12 +62,6 @@
 
   # Enable Automatic Garbage Collection	
   nix.gc.automatic = true;
-
-  # Add garbage collection alias
-  environment.interactiveShellInit = ''
-  alias recycle='nix-collect-garbage'
-  alias rebuild='nixos-rebuild switch --flake /etc/nixos/flake.nix'
-  '';
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
