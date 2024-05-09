@@ -2,7 +2,7 @@
 
 kitty
 swww init &
-swww img ~/Wallpapers/leisa.jpg &
+swww img /home/nix/Pictures/IcebergAntarctica_EN-GB4409581826_UHD.jpg &
 
 nm-applet --indicator &
 

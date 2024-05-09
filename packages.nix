@@ -13,5 +13,19 @@
     fastfetch # Just a better successor tbh
     vivaldi
     vivaldi-ffmpeg-codecs
+    rofi
+    rofi-emoji
+    rofi-power-menu
+    alacritty
+    kitty
+    dunst
+    waybar
+    swww
+    wofi
+    swayidle
+    swaylock
+    xdg-desktop-portal-hyprland
+    iperf2
+    networkmanagerapplet
   ];
 } 

@@ -14,6 +14,7 @@
       ./packages.nix    ## Package declaration file, will probably get its own modules later
       ./users.nix       ## User declaration alongside user packages
       ./bash.nix        ## Bash configuration (Aliases/Path Variables)
+      ./hyprland.nix    ## Hyprland and X11 config
       # Configuration for Virtual Machines, just to keep things tidy
       ./vm-config.nix
     ];
@@ -41,20 +42,6 @@
     LC_PAPER = "en_GB.UTF-8";
     LC_TELEPHONE = "en_GB.UTF-8";
     LC_TIME = "en_GB.UTF-8";
-  };
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
-	
-  # Configure keymap in X11
-  services.xserver = {
-    layout = "fr";
-    xkbVariant = "";
   };
 
   # Configure console keymap
